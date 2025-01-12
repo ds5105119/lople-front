@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const ProfileSchema = z.object({
   sex: z.number().int().optional(),
-  birthday: z.string().optional(),
+  birthday: z.string().refine((date) => !isNaN(Date.parse(date)), { message: "Invalid date format" }),
   profile: z.string().url().optional(),
   bio: z.string().optional(),
   link: z.string().url().optional(),
@@ -10,8 +10,8 @@ export const ProfileSchema = z.object({
 
 export const LoginRequestSchema = z.object({
   username: z.string().optional(),
-  email: z.string().email().optional(),
-  password: z.string(),
+  email: z.string({ required_error: "이메일을 입력해주세요." }).email("올바른 이메일 형식이 아닙니다.").optional(),
+  password: z.string({ required_error: "비밀번호를 입력해주세요." }),
 });
 
 export const LoginResponseSchema = z.object({
