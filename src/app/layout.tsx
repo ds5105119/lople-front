@@ -27,7 +27,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex justify-center bg-gray-100`}>
         <div className="flex flex-col w-full max-w-[600px] min-h-dvh max-h-dvh bg-white relative shadow-2xl shadow-neutral-200">
-          <div className="flex-1 overflow-auto">{children}</div>
+          <div className="flex-1 overflow-auto w-full">{children}</div>
           <Navigation />
         </div>
       </body>

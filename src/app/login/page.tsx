@@ -1,5 +1,8 @@
 import { Metadata } from "next";
-import Image from "next/image";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { GoogleIcon, KakaoIcon } from "@/components/icons";
+import Link from "next/link";
 import LoginForm from "@/components/form/loginform";
 
 export const metadata: Metadata = {
@@ -18,6 +21,42 @@ export default function LoginPage() {
           <p className="text-sm text-muted-foreground">로그인하여 신청할 수 있는 모든 복지 정보를 확인하세요</p>
         </div>
         <LoginForm />
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-background px-2 text-muted-foreground">또는</span>
+          </div>
+        </div>
+        <div className="grid gap-3">
+          <Button variant="outline" type="button" className="bg-white text-black hover:bg-gray-100 font-medium">
+            <GoogleIcon className="mr-2 h-4 w-4" />
+            <span>
+              <span className="font-semibold">Google</span>로 로그인
+            </span>
+          </Button>
+          <Button variant="secondary" type="button" className="bg-[#FEE500] text-black hover:bg-[#FDD000] font-medium">
+            <KakaoIcon className="mr-2 h-4 w-4" />
+            <span>
+              <span className="font-semibold">카카오</span>로 3초만에 시작하기
+            </span>
+          </Button>
+        </div>
+        <div className="grid gap-3">
+          <div className="relative flex justify-center text-sm uppercase">
+            <span className="bg-background px-2">비밀번호를 잊으셨나요?</span>
+          </div>
+          <div className="relative flex justify-center text-sm uppercase">
+            <span className="bg-background px-2 text-muted-foreground">계정이 없으신가요?</span>
+            <Link
+              href="/accounts/emailsignup"
+              className={cn("transition-colors text-violet-500 font-semibold hover:text-violet-700")}
+            >
+              회원가입
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );

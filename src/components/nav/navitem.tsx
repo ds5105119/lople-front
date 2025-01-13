@@ -16,8 +16,20 @@ export function NavItem({ href, icon: Icon, label }: NavItemProps) {
   const isActive = pathname === href;
 
   return (
-    <Link href={href} className={cn("group flex flex-col items-center justify-center gap-1 px-2 py-1 text-xs transition-colors", isActive ? "text-[#4E47F5]" : "text-muted-foreground hover:text-[#4E47F5]")}>
-      <Icon size={24} className={cn("transition-colors", isActive ? "text-[#4E47F5]" : "text-muted-foreground group-hover:text-[#4E47F5]")} />
+    <Link
+      href={href}
+      className={cn(
+        "group flex flex-col items-center justify-center gap-1 px-2 py-1 text-xs transition-colors",
+        isActive ? "text-[#4E47F5]" : "text-muted-foreground hover:text-[#4E47F5]"
+      )}
+    >
+      <Icon
+        size={24}
+        className={cn(
+          "transition-colors",
+          isActive ? "text-[#4E47F5]" : "text-muted-foreground group-hover:text-[#4E47F5]"
+        )}
+      />
       <span>{label}</span>
     </Link>
   );
