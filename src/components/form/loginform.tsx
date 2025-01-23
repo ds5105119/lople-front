@@ -13,10 +13,6 @@ const initialState = {
   message: "",
 };
 
-interface LoginFormProps {
-  setPending: (isPending: boolean) => void;
-}
-
 const LoginForm = () => {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [state, formAction, isPending] = useActionState(login, initialState);

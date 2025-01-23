@@ -1,6 +1,5 @@
 "use client";
 
-import { Divide, DivideSquare, DivideSquareIcon } from "lucide-react";
 import { useState, useEffect } from "react";
 
 interface ToastProps {
@@ -21,5 +20,11 @@ export function Toast({ message, duration = 3000, onClose }: ToastProps) {
     return () => clearTimeout(timer);
   }, [duration, onClose]);
 
-  return isVisible ? <div className="fixed bottom-16 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full bg-black text-white text-sm opacity-25">{message}</div> : <div />;
+  return isVisible ? (
+    <div className="fixed bottom-16 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full bg-black text-white text-sm opacity-25">
+      {message}
+    </div>
+  ) : (
+    <div />
+  );
 }
