@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { GoogleIcon, KakaoIcon } from "@/components/icons";
+import { GoogleLoginButton, KakaoLoginButton } from "@/components/button/socialloginbutton";
 import Link from "next/link";
 import LoginForm from "@/components/form/loginform";
 
@@ -30,18 +29,8 @@ export default function LoginPage() {
           </div>
         </div>
         <div className="grid gap-3">
-          <Button variant="outline" type="button" className="bg-white text-black hover:bg-gray-100 font-medium">
-            <GoogleIcon className="mr-2 h-4 w-4" />
-            <span>
-              <span className="font-semibold">Google</span>로 로그인
-            </span>
-          </Button>
-          <Button variant="secondary" type="button" className="bg-[#FEE500] text-black hover:bg-[#FDD000] font-medium">
-            <KakaoIcon className="mr-2 h-4 w-4" />
-            <span>
-              <span className="font-semibold">카카오</span>로 3초만에 시작하기
-            </span>
-          </Button>
+          <GoogleLoginButton />
+          <KakaoLoginButton />
         </div>
         <div className="grid gap-3">
           <div className="relative flex justify-center text-sm uppercase">

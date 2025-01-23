@@ -1,17 +1,12 @@
 "use client";
 
-import { useActionState, useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useActionState, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { Toast } from "@/components/toast/toast";
 import { login } from "@/hooks/account/user";
-import { cn } from "@/lib/utils";
-import { LoginRequestSchema, LoginRequestProps } from "@/types/accounts/api";
-import { ActionState } from "@/types/action";
 
 const initialState = {
   code: "",
@@ -26,19 +21,13 @@ const LoginForm = () => {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [state, formAction, isPending] = useActionState(login, initialState);
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
 
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm<LoginRequestProps>({
-    resolver: zodResolver(LoginRequestSchema),
-    mode: "onBlur",
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
+  useEffect(() => {
+    if (state.code === "SERVER_ERROR") {
+      setToastMessage("로그인에 실패하였습니다.");
+    }
+  }, [state]);
 
   return (
     <form action={formAction}>
@@ -49,13 +38,15 @@ const LoginForm = () => {
           </Label>
           <Input
             id="email"
-            placeholder="이메일"
             type="email"
+            name="email"
+            placeholder="이메일"
             autoCapitalize="none"
             autoComplete="email"
             autoCorrect="off"
-            className={cn(state.code == "PARSE_ERROR" && "border-red-500 focus-visible:ring-red-500")}
-            {...register("email")}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required={true}
           />
         </div>
         <div className="grid gap-1 relative">
@@ -64,13 +55,13 @@ const LoginForm = () => {
           </Label>
           <Input
             id="password"
-            placeholder="비밀번호"
             type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="비밀번호"
             autoCapitalize="none"
             autoComplete="current-password"
             autoCorrect="off"
-            className={cn(errors.password && "border-red-500 focus-visible:ring-red-500")}
-            {...register("password")}
+            required={true}
           />
           <button
             type="button"

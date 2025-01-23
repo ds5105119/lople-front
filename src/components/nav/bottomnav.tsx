@@ -5,7 +5,7 @@ import { NavItem } from "@/components/nav/navitem";
 
 export function Navigation() {
   return (
-    <nav className="flex h-16 w-full items-center justify-around border-t bg-background">
+    <nav className="flex h-16 w-full items-center pt-1 justify-around border-t bg-background">
       <NavItem href="/" icon={Home} label="홈" />
       <NavItem href="/explore" icon={FileText} label="추천" />
       <NavItem href="/community" icon={MessageSquare} label="커뮤니티" />

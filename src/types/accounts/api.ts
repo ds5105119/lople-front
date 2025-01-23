@@ -1,12 +1,5 @@
 import { z } from "zod";
-
-export const ProfileSchema = z.object({
-  sex: z.number().int().optional(),
-  birthday: z.string().refine((date) => !isNaN(Date.parse(date)), { message: "Invalid date format" }),
-  profile: z.string().url().optional(),
-  bio: z.string().optional(),
-  link: z.string().url().optional(),
-});
+import { ProfileSchema, LoginUserSchema } from "./user";
 
 export const LoginRequestSchema = z.object({
   username: z.string().optional(),
@@ -16,7 +9,8 @@ export const LoginRequestSchema = z.object({
 
 export const LoginResponseSchema = z.object({
   access: z.string(),
-  refresh: z.string().optional(),
+  refresh: z.string().nullable().optional(),
+  user: LoginUserSchema,
 });
 
 export const RegistrationSchema = z.object({
@@ -32,7 +26,6 @@ export const TokenRefreshSchema = z.object({
   refresh: z.string().optional(),
 });
 
-export type ProfileProps = z.infer<typeof ProfileSchema>;
 export type LoginRequestProps = z.infer<typeof LoginRequestSchema>;
 export type LoginResponseProps = z.infer<typeof LoginResponseSchema>;
 export type RegistrationProps = z.infer<typeof RegistrationSchema>;

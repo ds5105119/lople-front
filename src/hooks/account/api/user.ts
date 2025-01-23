@@ -1,4 +1,11 @@
-import { LoginRequestProps, LoginResponseSchema, LoginRequestSchema, RegistrationSchema, LoginResponseProps, RegistrationProps } from "@/types/accounts/api";
+import {
+  LoginRequestProps,
+  LoginResponseSchema,
+  LoginRequestSchema,
+  RegistrationSchema,
+  LoginResponseProps,
+  RegistrationProps,
+} from "@/types/accounts/api";
 
 export const loginApi = async (credentials: LoginRequestProps): Promise<LoginResponseProps> => {
   try {
@@ -20,8 +27,6 @@ export const loginApi = async (credentials: LoginRequestProps): Promise<LoginRes
     }
 
     const responseData = await response.json();
-    console.log(responseData);
-
     const parsedData = LoginResponseSchema.parse(responseData);
 
     return parsedData;
