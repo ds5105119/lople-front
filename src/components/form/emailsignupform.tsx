@@ -43,6 +43,7 @@ export default function SignUpForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="font-bold">사용자 아이디</FormLabel>
+              <FormDescription>다른 유저와 겹칠 수 없습니다.</FormDescription>
               <FormControl>
                 <Input placeholder="새 아이디" {...field} />
               </FormControl>
