@@ -5,7 +5,7 @@ import {
   RegistrationSchema,
   LoginResponseProps,
   RegistrationProps,
-} from "@/types/accounts/api";
+} from "@/@types/accounts/api";
 
 export const loginApi = async (credentials: LoginRequestProps): Promise<LoginResponseProps> => {
   try {

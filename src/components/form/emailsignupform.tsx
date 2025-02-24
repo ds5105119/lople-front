@@ -10,7 +10,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "../ui/passwordinput";
 
-import { signupSchema, SignupInput } from "@/types/accounts/signup";
+import { signupSchema, SignupInput } from "@/@types/accounts/signup";
 
 export default function SignUpForm() {
   const [isPending, setIsPending] = useState(false);

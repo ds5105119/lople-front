@@ -1,18 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { Navigation } from "@/components/nav/bottomnav";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const pretendard = localFont({
+  src: "../fonts/PretendardVariable.woff2",
+  display: "swap",
+  weight: "45 920",
+  variable: "--font-pretendard",
 });
 
 export const metadata: Metadata = {
@@ -27,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex justify-center bg-gray-100`}>
+      <body className={`${pretendard.variable} font-pretendard antialiased flex justify-center bg-gray-100`}>
         <div className="flex flex-col w-full max-w-[500px] min-h-dvh max-h-dvh bg-white relative shadow-2xl shadow-neutral-200">
           <div className="flex-1 overflow-auto w-full">{children}</div>
           <Navigation />

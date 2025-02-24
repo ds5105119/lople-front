@@ -1,5 +1,5 @@
 import { loginApi, registrationApi } from "@/hooks/account/api/user";
-import { LoginRequestSchema, LoginRequestProps, RegistrationSchema, RegistrationProps } from "@/types/accounts/api";
+import { LoginRequestSchema, LoginRequestProps, RegistrationSchema, RegistrationProps } from "@/@types/accounts/api";
 
 export const login = async (
   currentState: {

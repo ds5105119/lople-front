@@ -1,6 +1,6 @@
 import axios, { InternalAxiosRequestConfig, AxiosRequestConfig, AxiosError } from "axios";
 import { useAuthStore } from "@/store/auth";
-import { TokenRefreshProps, TokenRefreshSchema } from "@/types/accounts/api";
+import { TokenRefreshProps, TokenRefreshSchema } from "@/@types/accounts/api";
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
