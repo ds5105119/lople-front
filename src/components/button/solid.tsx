@@ -1,7 +1,7 @@
 import React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
-const buttonVariants = cva("w-full flex items-center justify-center transition-all duration-75 ease-in-out focus:outline-none focus-visible:ring-0", {
+const buttonVariants = cva("w-full flex items-center justify-center transition-all duration-75 ease-in-out focus:outline-hidden focus-visible:ring-0", {
   variants: {
     intent: {
       default: "text-white",
