@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2025, IIH. All rights reserved.
+ * 바닥에 위치하는 세로 방향 Mobile 환경의 NavBar 컴포넌트입니다.
+ */
+
 "use client";
 
 import { Home, FileText, MessageSquare, Gift, Menu } from "lucide-react";
