@@ -6,16 +6,17 @@ export const welfareRequestSchema = z.object({
 });
 
 export const welfareSchema = z.object({
+  id: z.number(),
   views: z.number(),
   service_name: z.string(),
-  service_summary: z.string(),
+  service_summary: z.string().nullable().optional(),
   service_category: z.string(),
-  service_conditions: z.string(),
+  service_conditions: z.string().nullable().optional(),
   apply_period: z.string(),
   apply_url: z.string().url().nullable().optional(),
   document: z.string().nullable().optional(),
-  receiving_agency: z.string(),
-  contact: z.string(),
+  receiving_agency: z.string().nullable().optional(),
+  contact: z.string().nullable().optional(),
   support_details: z.string(),
 });
 

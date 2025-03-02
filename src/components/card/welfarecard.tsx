@@ -1,12 +1,10 @@
-"use client";
-
 import { Eye, Bookmark } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { welfare } from "@/@types/openApi/welfare";
 import Link from "next/link";
 
-interface GovernmentSupportCardProps {
+interface WelfareCardProps {
   img?: string;
   href?: string;
   bookmarks?: number;
@@ -26,7 +24,7 @@ const formatNumber = (num: number) => {
   }
 };
 
-export function GovernmentSupportCard({ img, href, bookmarks, data, className }: GovernmentSupportCardProps) {
+export default function WelfareCard({ img, href, bookmarks, data, className }: WelfareCardProps) {
   return (
     <Link href={href ?? "/"}>
       <Card className={cn("transition-all duration-200 hover:shadow-md", className)}>

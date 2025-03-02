@@ -1,13 +1,16 @@
-import { welfareRequestSchema, welfareResponseSchema, welfareRequest, walfareResponse } from "@/@types/openApi/welfare";
 import { auth } from "@/auth";
+import { SWRInfiniteKeyLoader } from "swr/infinite";
 
-export const welfareRecommandAPI = async (params: welfareRequest): Promise<walfareResponse> => {
+import { welfareResponseSchema, walfareResponse } from "@/@types/openApi/welfare";
+
+export const welfareRecommandGetKey: SWRInfiniteKeyLoader = (index, previousPageData) => {
+  if (previousPageData && !previousPageData) return null;
+  return `${process.env.NEXT_PUBLIC_RECOMMEND_WELFARE_URL}?page=${index}&size=10`;
+};
+
+export const welfareRecommandFetcher = async (url: string): Promise<walfareResponse> => {
   try {
-    const parsedParams = welfareRequestSchema.parse(params);
     const session = await auth();
-
-    const queryString = new URLSearchParams(parsedParams).toString();
-    const url = `${process.env.NEXT_PUBLIC_RECOMMEND_WELFARE_URL}?${queryString}`;
 
     const response = await fetch(url, {
       method: "GET",
