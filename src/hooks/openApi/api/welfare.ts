@@ -1,25 +1,30 @@
 import { welfareRequestSchema, welfareResponseSchema, welfareRequest, walfareResponse } from "@/@types/openApi/welfare";
+import { auth } from "@/auth";
 
-export const welfareRecommandAPI = async (credentials: welfareRequest): Promise<walfareResponse> => {
+export const welfareRecommandAPI = async (params: welfareRequest): Promise<walfareResponse> => {
   try {
-    welfareRequestSchema.parse(credentials);
+    const parsedParams = welfareRequestSchema.parse(params);
+    const session = await auth();
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_LOGIN_URL}`, {
-      method: "POST",
+    const queryString = new URLSearchParams(parsedParams).toString();
+    const url = `${process.env.NEXT_PUBLIC_RECOMMEND_WELFARE_URL}?${queryString}`;
+
+    const response = await fetch(url, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${session?.access_token}`,
       },
-      body: JSON.stringify(credentials),
-      redirect: "manual",
+      redirect: "follow",
       credentials: "include",
     });
 
+    const responseData = await response.json();
+
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+      throw new Error(responseData.message || `HTTP error! status: ${response.status}`);
     }
 
-    const responseData = await response.json();
     const parsedData = welfareResponseSchema.parse(responseData);
 
     return parsedData;

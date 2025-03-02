@@ -8,8 +8,8 @@ import Link from "next/link";
 
 interface GovernmentSupportCardProps {
   img?: string;
-  href: string;
-  bookmarks: number;
+  href?: string;
+  bookmarks?: number;
   data: welfare;
   className?: string;
 }
@@ -28,7 +28,7 @@ const formatNumber = (num: number) => {
 
 export function GovernmentSupportCard({ img, href, bookmarks, data, className }: GovernmentSupportCardProps) {
   return (
-    <Link href={href}>
+    <Link href={href ?? "/"}>
       <Card className={cn("transition-all duration-200 hover:shadow-md", className)}>
         <CardContent className="p-4 space-y-2">
           <div className="flex items-center align-baseline space-x-2">
@@ -52,7 +52,7 @@ export function GovernmentSupportCard({ img, href, bookmarks, data, className }:
             </div>
             <div className="flex items-center gap-1.5">
               <Bookmark className="w-4 h-4" />
-              <span>{formatNumber(bookmarks)}</span>
+              <span>{formatNumber(bookmarks ?? 0)}</span>
             </div>
           </div>
         </CardContent>
