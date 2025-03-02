@@ -8,31 +8,43 @@ interface WelfareInfoProps {
 
 export function WelfareInfo({ welfare }: WelfareInfoProps) {
   return (
-    <div className="space-y-4">
-      <div className="space-y-1">
-        <h1 className="text-2xl font-bold">{welfare.service_name}</h1>
-        <p className="text-sm text-muted-foreground">{welfare.service_summary}</p>
+    <div className="space-y-6">
+      <div className="space-y-3.5">
+        <WelfareTags
+          category={welfare.service_category || ""}
+          type={welfare.support_type || ""}
+          isOnline={welfare.apply_method?.includes("온라인")}
+        />
+        <div className="space-y-1">
+          <h1 className="text-2xl font-bold">{welfare.service_name}</h1>
+          <p className="text-sm text-muted-foreground">{welfare.service_summary}</p>
+        </div>
       </div>
 
-      <WelfareTags
-        category={welfare.service_category || ""}
-        type={welfare.support_type || ""}
-        isOnline={welfare.apply_method?.includes("온라인")}
-      />
-
       <Card>
-        <CardContent>
-          <div className="flex w-full justify-between px-2">
-            <span className="text-sm text-gray-600">지원혜택</span>
-            <span className="text-sm font-medium truncate max-w-[calc(50%-0.5rem)]">{welfare.support_details}</span>
-          </div>
-          <div className="flex w-full justify-between px-2">
-            <span className="text-sm text-gray-600">신청기간</span>
-            <span className="text-sm font-medium truncate max-w-[calc(50%-0.5rem)]">{welfare.apply_period}</span>
-          </div>
-          <div className="flex w-full justify-between px-2">
-            <span className="text-sm text-gray-600">정책기관</span>
-            <span className="text-sm font-medium truncate max-w-[calc(50%-0.5rem)]">{welfare.dept_name}</span>
+        <CardContent className="grid gap-4">
+          <div className="w-full">
+            <div className="mb-4 grid grid-cols-[25px_1fr] items-start pb-2 last:mb-0 last:pb-0">
+              <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
+              <div className="space-y-1">
+                <p className="text-sm font-medium leading-none">연락처</p>
+                <p className="text-sm text-muted-foreground">{welfare.contact}</p>
+              </div>
+            </div>
+            <div className="mb-4 grid grid-cols-[25px_1fr] items-start pb-2 last:mb-0 last:pb-0">
+              <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
+              <div className="space-y-1">
+                <p className="text-sm font-medium leading-none">신청기간</p>
+                <p className="text-sm text-muted-foreground">{welfare.apply_period}</p>
+              </div>
+            </div>
+            <div className="mb-4 grid grid-cols-[25px_1fr] items-start pb-2 last:mb-0 last:pb-0">
+              <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
+              <div className="space-y-1">
+                <p className="text-sm font-medium leading-none">정책기관</p>
+                <p className="text-sm text-muted-foreground">{welfare.receiving_agency}</p>
+              </div>
+            </div>
           </div>
         </CardContent>
       </Card>

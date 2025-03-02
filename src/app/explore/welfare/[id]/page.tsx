@@ -59,7 +59,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   return (
     <div>
       <WelfareHeader />
-      <div className="space-y-4 px-6">
+      <div className="space-y-4 px-6 mt-8">
         <WelfareInfo welfare={welfare} />
         <WelfareDetails welfare={welfare} />
       </div>
