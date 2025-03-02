@@ -7,17 +7,33 @@ export const welfareRequestSchema = z.object({
 
 export const welfareSchema = z.object({
   id: z.number(),
+  created_at: z.string().datetime({ local: true }).nullable().optional(),
+  updated_at: z.string().datetime({ local: true }).nullable().optional(),
   views: z.number(),
+
   service_name: z.string(),
   service_summary: z.string().nullable().optional(),
-  service_category: z.string(),
+  service_category: z.string().nullable().optional(),
   service_conditions: z.string().nullable().optional(),
-  apply_period: z.string(),
+
+  offc_name: z.string().nullable().optional(),
+  dept_name: z.string().nullable().optional(),
+  dept_type: z.string().nullable().optional(),
+  dept_code: z.string().nullable().optional(),
+
+  apply_period: z.string().nullable().optional(),
+  apply_method: z.string().nullable().optional(),
   apply_url: z.string().url().nullable().optional(),
   document: z.string().nullable().optional(),
   receiving_agency: z.string().nullable().optional(),
   contact: z.string().nullable().optional(),
-  support_details: z.string(),
+
+  support_details: z.string().nullable().optional(),
+  support_targets: z.string().nullable().optional(),
+  support_type: z.string().nullable().optional(),
+
+  detail_url: z.string().url().nullable().optional(),
+  law: z.string().nullable().optional(),
 });
 
 export const welfareResponseSchema = z.array(welfareSchema);

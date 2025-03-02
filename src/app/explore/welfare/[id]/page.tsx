@@ -1,33 +1,28 @@
 import { auth } from "@/auth";
+import { welfareSchema } from "@/@types/openApi/welfare";
+import { WelfareHeader } from "@/components/welfare/welfare-header";
+import { WelfareInfo } from "@/components/welfare/welfare-info";
+import { WelfareDetails } from "@/components/welfare/welfare-details";
+import { WelfareActions } from "@/components/welfare/welfare-actions";
 
-// Next.js will invalidate the cache when a
-// request comes in, at most once every 60 seconds.
 export const revalidate = 60;
-
-// We'll prerender only the params from `generateStaticParams` at build time.
-// If a request comes in for a path that hasn't been generated,
-// Next.js will server-render the page on-demand.
-
-export const dynamicParams = true; // or false, to 404 on unknown paths
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
   const firstResponse = await fetch(`${process.env.NEXT_PUBLIC_WELFARE_STATIC_PARAMS_URL}`, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
-    redirect: "manual", // 수동 리다이렉트 처리
+    redirect: "manual",
     credentials: "include",
   });
 
-  // 2. 리다이렉트 발생 시 처리
   if (firstResponse.status === 307) {
     const redirectUrl = new URL(
       firstResponse.headers.get("location")!,
-      `${process.env.NEXT_PUBLIC_WELFARE_STATIC_PARAMS_URL}` // 절대 경로로 변환
+      `${process.env.NEXT_PUBLIC_WELFARE_STATIC_PARAMS_URL}`
     ).toString();
 
     const sessionCookie = firstResponse.headers.get("set-cookie")?.split(";")[0]; // 세션 쿠키 추출
-
-    // 3. 리다이렉트 URL로 재요청 (+쿠키 포함)
     const secondResponse = await fetch(redirectUrl, {
       method: "GET",
       headers: {
@@ -41,15 +36,13 @@ export async function generateStaticParams() {
     return Object.entries(response).map(([key, value]) => [key, String(value)]);
   }
 
-  // 리다이렉트 없을 경우 기본 처리
   const response = firstResponse.json();
   return Object.entries(response).map(([key, value]) => [key, String(value)]);
 }
-
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const id = (await params).id;
-  const session = await auth();
 
+  const session = await auth();
   const response = await fetch(`${process.env.NEXT_PUBLIC_WELFARE_URL}?id=${id}`, {
     method: "GET",
     headers: {
@@ -60,5 +53,17 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
     credentials: "include",
   });
 
-  return <div>{response.text()}</div>;
+  const data = await response.json();
+  const welfare = welfareSchema.parse(data);
+
+  return (
+    <div>
+      <WelfareHeader />
+      <div className="space-y-4 px-6">
+        <WelfareInfo welfare={welfare} />
+        <WelfareDetails welfare={welfare} />
+      </div>
+      <WelfareActions applyUrl={welfare.apply_url} contact={welfare.contact} />
+    </div>
+  );
 }
