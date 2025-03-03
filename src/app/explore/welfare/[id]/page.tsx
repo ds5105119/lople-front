@@ -47,7 +47,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${session?.access_token}`,
+      ...(session?.access_token && { Authorization: `Bearer ${session.access_token}` }),
     },
     redirect: "follow",
     credentials: "include",
