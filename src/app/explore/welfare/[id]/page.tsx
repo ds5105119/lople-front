@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
+import TopDetailHeader from "@/components/nav/topdetailnav";
 import { welfareSchema } from "@/@types/openApi/welfare";
-import { WelfareHeader } from "@/components/welfare/welfare-header";
 import { WelfareInfo } from "@/components/welfare/welfare-info";
 import { WelfareDetails } from "@/components/welfare/welfare-details";
 import { WelfareActions } from "@/components/welfare/welfare-actions";
@@ -58,7 +58,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
   return (
     <div>
-      <WelfareHeader />
+      <TopDetailHeader />
       <div className="space-y-4 px-6 mt-8">
         <WelfareInfo welfare={welfare} />
         <WelfareDetails welfare={welfare} />

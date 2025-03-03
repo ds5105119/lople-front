@@ -1,5 +1,6 @@
 import type { welfare } from "@/@types/openApi/welfare";
 import { Card, CardContent } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { WelfareTags } from "./welfare-tags";
 
 interface WelfareInfoProps {
@@ -21,33 +22,42 @@ export function WelfareInfo({ welfare }: WelfareInfoProps) {
         </div>
       </div>
 
-      <Card>
-        <CardContent className="grid gap-4">
-          <div className="w-full">
-            <div className="mb-4 grid grid-cols-[25px_1fr] items-start pb-2 last:mb-0 last:pb-0">
-              <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
-              <div className="space-y-1">
-                <p className="text-sm font-medium leading-none">연락처</p>
-                <p className="text-sm text-muted-foreground">{welfare.contact}</p>
+      <Tabs defaultValue="요약" className="w-full">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="요약">Account</TabsTrigger>
+          <TabsTrigger value="password">Password</TabsTrigger>
+        </TabsList>
+        <TabsContent value="요약">
+          <Card>
+            <CardContent className="grid gap-4">
+              <div className="w-full">
+                <div className="mb-4 grid grid-cols-[25px_1fr] items-start pb-2 last:mb-0 last:pb-0">
+                  <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium leading-none">연락처</p>
+                    <p className="text-sm text-muted-foreground">{welfare.contact}</p>
+                  </div>
+                </div>
+                <div className="mb-4 grid grid-cols-[25px_1fr] items-start pb-2 last:mb-0 last:pb-0">
+                  <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium leading-none">신청기간</p>
+                    <p className="text-sm text-muted-foreground">{welfare.apply_period}</p>
+                  </div>
+                </div>
+                <div className="mb-4 grid grid-cols-[25px_1fr] items-start pb-2 last:mb-0 last:pb-0">
+                  <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium leading-none">정책기관</p>
+                    <p className="text-sm text-muted-foreground">{welfare.receiving_agency}</p>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="mb-4 grid grid-cols-[25px_1fr] items-start pb-2 last:mb-0 last:pb-0">
-              <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
-              <div className="space-y-1">
-                <p className="text-sm font-medium leading-none">신청기간</p>
-                <p className="text-sm text-muted-foreground">{welfare.apply_period}</p>
-              </div>
-            </div>
-            <div className="mb-4 grid grid-cols-[25px_1fr] items-start pb-2 last:mb-0 last:pb-0">
-              <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
-              <div className="space-y-1">
-                <p className="text-sm font-medium leading-none">정책기관</p>
-                <p className="text-sm text-muted-foreground">{welfare.receiving_agency}</p>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="password"></TabsContent>
+      </Tabs>
     </div>
   );
 }

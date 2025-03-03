@@ -6,7 +6,7 @@
 "use client";
 
 import { Home, FileText, MessageSquare, Gift, Menu } from "lucide-react";
-import { NavItem } from "@/components/nav/navitem";
+import { NavItem } from "@/components/nav/bottomnavitem";
 
 export function Navigation() {
   return (
