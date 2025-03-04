@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import MobileDetailHeader from "@/components/header/mobiledetailheader";
-import MobileHeaderButton from "@/components/button/mobileheaderbutton";
+import MobileHeaderShareButton from "@/components/button/mobileheadersharebutton";
 import { welfareSchema } from "@/@types/openApi/welfare";
 import { WelfareInfo } from "@/components/welfare/welfare-info";
 import { WelfareDetails } from "@/components/welfare/welfare-details";
@@ -61,7 +61,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   return (
     <div>
       <MobileDetailHeader text={"정책 세부"}>
-        <MobileHeaderButton icon={Share} size={6} />
+        <MobileHeaderShareButton />
       </MobileDetailHeader>
 
       <div className="space-y-4 px-6 mt-8">
