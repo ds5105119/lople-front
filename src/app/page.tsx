@@ -1,6 +1,4 @@
 import Image from "next/image";
-import OutlineButton from "@/components/button/outline";
-import Button from "@/components/button/solid";
 import { auth, signIn, signOut } from "@/auth";
 
 export default async function Home() {
@@ -59,9 +57,6 @@ export default async function Home() {
             Read our docs
           </a>
         </div>
-
-        <OutlineButton>올집</OutlineButton>
-        <Button>처음 버튼</Button>
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
         <a

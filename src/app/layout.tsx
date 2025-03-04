@@ -23,12 +23,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${pretendard.variable} font-pretendard antialiased flex justify-center bg-gray-100`}>
-        <div className="flex flex-col w-full max-w-[500px] min-h-dvh max-h-dvh bg-white relative shadow-2xl shadow-neutral-200">
-          <div className="flex-1 overflow-auto w-full">{children}</div>
+    <html lang="en" className="h-full">
+      <body
+        className={`${pretendard.variable} font-pretendard antialiased flex justify-center bg-gray-100 overflow-auto`}
+      >
+        <div className="min-h-screen w-full mx-auto max-w-[500px] bg-white shadow-2xl shadow-neutral-200 relative">
+          <div className="pb-16 h-full">{children}</div>
           <Navigation />
         </div>
+
         <Analytics />
         <SpeedInsights />
       </body>
