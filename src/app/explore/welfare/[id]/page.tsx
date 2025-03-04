@@ -5,7 +5,6 @@ import { welfareSchema } from "@/@types/openApi/welfare";
 import { WelfareInfo } from "@/components/welfare/welfare-info";
 import { WelfareDetails } from "@/components/welfare/welfare-details";
 import { WelfareActions } from "@/components/welfare/welfare-actions";
-import { Share } from "lucide-react";
 
 export const revalidate = 60;
 export const dynamicParams = true;

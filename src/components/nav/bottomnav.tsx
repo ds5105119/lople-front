@@ -15,7 +15,7 @@ export function Navigation() {
         <NavItem href="/" icon={Home} label="홈" />
         <NavItem href="/explore" icon={FileText} label="추천" />
         <NavItem href="/community" icon={MessageSquare} label="커뮤니티" />
-        <NavItem href="/benefits" icon={Gift} label="혜택받기" />
+        <NavItem href="/store" icon={Gift} label="스토어" />
         <NavItem href="/accounts" icon={Menu} label="메뉴" />
       </div>
     </nav>
