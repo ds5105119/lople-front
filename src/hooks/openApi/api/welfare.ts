@@ -1,34 +1,30 @@
-import { auth } from "@/auth";
-import { SWRInfiniteKeyLoader } from "swr/infinite";
+import { Session } from "next-auth";
+import { WelfareSchema, Welfare } from "@/@types/openApi/welfare";
 
-import { welfareResponseSchema, walfareResponse } from "@/@types/openApi/welfare";
+interface getWelfareProps {
+  id: number | string;
+  session: Session | null;
+}
 
-export const welfareRecommandGetKey: SWRInfiniteKeyLoader = (index, previousPageData) => {
-  if (previousPageData && !previousPageData) return null;
-  return `${process.env.NEXT_PUBLIC_RECOMMEND_WELFARE_URL}?page=${index}&size=10`;
-};
-
-export const welfareRecommandFetcher = async (url: string): Promise<walfareResponse> => {
+export const getWelfare = async ({ id, session }: getWelfareProps): Promise<Welfare> => {
   try {
-    const session = await auth();
-
-    const response = await fetch(url, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_WELFARE_URL}?id=${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session?.access_token}`,
+        ...(session?.access_token && { Authorization: `Bearer ${session.access_token}` }),
       },
       redirect: "follow",
       credentials: "include",
     });
 
-    const responseData = await response.json();
-
     if (!response.ok) {
-      throw new Error(responseData.message || `HTTP error! status: ${response.status}`);
+      const errorData = await response.json();
+      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
     }
 
-    const parsedData = welfareResponseSchema.parse(responseData);
+    const responseData = await response.json();
+    const parsedData = WelfareSchema.parse(responseData);
 
     return parsedData;
   } catch (error) {

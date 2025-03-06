@@ -1,29 +1,23 @@
-import { Button } from "@/components/ui/button";
-import { Label } from "@radix-ui/react-label";
+import { auth } from "@/auth";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import MobileMainHeader from "@/components/header/mobilemainheader";
-import MobileHeader from "@/components/header/mobiledefaultheader";
-import { auth, signIn, signOut } from "@/auth";
-import { Settings } from "lucide-react";
 import { Heart, NotebookPen } from "lucide-react";
+import { getUserData } from "@/hooks/account/api/userdata";
+import MobileDetailHeader from "@/components/header/mobiledetailheader";
 import MenuCard from "@/components/card/menucard";
 import MenuCardButton from "@/components/button/menucardbutton";
-import { UserDataSchema } from "@/@types/accounts/userdata";
+import UserDataEditForm from "@/components/form/userdataeditform";
 
-const fetcher = async (url: string) => {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error("Failed to load data");
-  const data = await res.json();
-  return UserDataSchema.parse(data);
-};
-
-export default async function Home() {
+export default async function Page() {
   const session = await auth();
+  if (!session) return "로그인이 필요합니다.";
+
+  const userData = await getUserData({ session });
 
   return (
     <div>
-      <MobileHeader text="내 가구 정보" />
+      <MobileDetailHeader text="내 가구 정보" />
 
       <div className="p-4 space-y-3">
         안녕하세요 {session?.user && session.user.name} 님
@@ -39,48 +33,9 @@ export default async function Home() {
             </div>
           </TabsContent>
           <TabsContent value="secondary">
-            <div className="flex flex-wrap gap-2 min-h-fit">
-              <Button variant="outline" size="sm">
-                다문화가정
-              </Button>
-              <Button variant="outline" size="sm">
-                북한이탈주민
-              </Button>
-              <Button variant="outline" size="sm">
-                한부모가정 조부모가정
-              </Button>
-              <Button variant="outline" size="sm">
-                무주택자
-              </Button>
-              <Button variant="outline" size="sm">
-                신규전입
-              </Button>
-              <Button variant="outline" size="sm">
-                다자녀 가구
-              </Button>
-              <Button variant="outline" size="sm">
-                확대가족
-              </Button>
-              <Button variant="outline" size="sm">
-                장애인
-              </Button>
-              <Button variant="outline" size="sm">
-                상여군인
-              </Button>
-              <Button variant="outline" size="sm">
-                질병
-              </Button>
-            </div>
+            <UserDataEditForm session={session} data={userData} />
           </TabsContent>
         </Tabs>
-        <MenuCard text="나의 정보">
-          <MenuCardButton href="/accounts/welfare/data" icon={NotebookPen} text="내 가구 정보" />
-          <MenuCardButton href="/settings/likes" icon={Heart} text="관심목록" />
-        </MenuCard>
-        <MenuCard text="전체 서비스">
-          <MenuCardButton href="/accounts/welfare/data" icon={NotebookPen} text="내 가구 정보" />
-          <MenuCardButton href="/settings/likes" icon={Heart} text="관심목록" />
-        </MenuCard>
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-export default async function Home() {
+export default async function Page() {
   const session = await auth();
 
   return (
@@ -88,9 +88,7 @@ export default async function Home() {
               <MenuCardButton text="로그인" className="text-blue-400" type="submit" showChevron={false} />
             </form>
           )}
-          {session?.user && (
-            <MenuCardButton href="/settings/likes" text="회원탈퇴" className="text-destructive" showChevron={false} />
-          )}
+          {session?.user && <MenuCardButton href="/settings/likes" text="회원탈퇴" className="text-destructive" showChevron={false} />}
         </MenuCard>
       </div>
     </div>

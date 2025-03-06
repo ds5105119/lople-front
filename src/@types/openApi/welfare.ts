@@ -1,11 +1,11 @@
 import { z } from "zod";
 
-export const welfareRequestSchema = z.object({
+export const WelfareRequestSchema = z.object({
   page: z.number().transform((val) => val.toString()), // number → string 변환
   size: z.number().transform((val) => val.toString()), // number → string 변환
 });
 
-export const welfareSchema = z.object({
+export const WelfareSchema = z.object({
   id: z.number(),
   created_at: z.string().datetime({ local: true }).nullable().optional(),
   updated_at: z.string().datetime({ local: true }).nullable().optional(),
@@ -36,8 +36,8 @@ export const welfareSchema = z.object({
   law: z.string().nullable().optional(),
 });
 
-export const welfareResponseSchema = z.array(welfareSchema);
+export const WelfareResponseSchema = z.array(WelfareSchema);
 
-export type welfareRequest = z.input<typeof welfareRequestSchema>;
-export type welfare = z.infer<typeof welfareSchema>;
-export type walfareResponse = z.infer<typeof welfareResponseSchema>;
+export type WelfareRequest = z.input<typeof WelfareRequestSchema>;
+export type Welfare = z.infer<typeof WelfareSchema>;
+export type WalfareResponse = z.infer<typeof WelfareResponseSchema>;

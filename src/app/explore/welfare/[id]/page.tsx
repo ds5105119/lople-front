@@ -1,10 +1,10 @@
 import { auth } from "@/auth";
-import MobileDetailHeader from "@/components/header/mobiledetailheader";
-import MobileHeaderShareButton from "@/components/button/mobileheadersharebutton";
-import { welfareSchema } from "@/@types/openApi/welfare";
+import { getWelfare } from "@/hooks/openApi/api/welfare";
 import { WelfareInfo } from "@/components/welfare/welfare-info";
 import { WelfareDetails } from "@/components/welfare/welfare-details";
 import { WelfareActions } from "@/components/welfare/welfare-actions";
+import MobileDetailHeader from "@/components/header/mobiledetailheader";
+import MobileHeaderShareButton from "@/components/button/mobileheadersharebutton";
 
 export const revalidate = 60;
 export const dynamicParams = true;
@@ -42,20 +42,8 @@ export async function generateStaticParams() {
 }
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const id = (await params).id;
-
   const session = await auth();
-  const response = await fetch(`${process.env.NEXT_PUBLIC_WELFARE_URL}?id=${id}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      ...(session?.access_token && { Authorization: `Bearer ${session.access_token}` }),
-    },
-    redirect: "follow",
-    credentials: "include",
-  });
-
-  const data = await response.json();
-  const welfare = welfareSchema.parse(data);
+  const welfare = await getWelfare({ id, session });
 
   return (
     <div>

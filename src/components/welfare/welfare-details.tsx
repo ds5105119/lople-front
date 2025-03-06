@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { welfare } from "@/@types/openApi/welfare";
+import { Welfare } from "@/@types/openApi/welfare";
 import { Button } from "@/components/ui/button";
 
 interface WelfareDetailsProps {
-  welfare: welfare;
+  welfare: Welfare;
 }
 
 export function WelfareDetails({ welfare }: WelfareDetailsProps) {

@@ -1,10 +1,10 @@
-import type { welfare } from "@/@types/openApi/welfare";
+import type { Welfare } from "@/@types/openApi/welfare";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { WelfareTags } from "./welfare-tags";
 
 interface WelfareInfoProps {
-  welfare: welfare;
+  welfare: Welfare;
 }
 
 export function WelfareInfo({ welfare }: WelfareInfoProps) {
