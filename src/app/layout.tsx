@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Navigation } from "@/components/nav/bottomnav";
+import Navigation from "@/components/nav/bottomnav";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
@@ -24,10 +24,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full">
-      <body
-        className={`${pretendard.variable} font-pretendard antialiased flex justify-center bg-gray-100 overflow-auto`}
-      >
-        <div className="min-h-screen w-full mx-auto max-w-[500px] bg-white shadow-2xl shadow-neutral-200 relative">
+      <body className={`${pretendard.variable} font-pretendard antialiased flex justify-center bg-gray-100 overflow-auto`}>
+        <div className="min-h-screen w-full mx-auto max-w-[600px] bg-white shadow-2xl shadow-neutral-200 relative">
           <div className="pb-16 h-full">{children}</div>
           <Navigation />
         </div>

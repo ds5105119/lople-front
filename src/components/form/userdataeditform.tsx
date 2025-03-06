@@ -6,17 +6,16 @@ import { UserData } from "@/@types/accounts/userdata";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Command, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Check, ChevronsUpDown, RotateCcw } from "lucide-react";
+import { Check, ChevronsUpDown, Loader2, RotateCcw } from "lucide-react";
 import { PartialUserData, PartialUserDataSchema } from "@/@types/accounts/userdata";
 import ToggleButton from "@/components/button/checkbutton";
-
 interface UserDataEditFormProps {
-  session: Session;
-  data: UserData | null;
+  session?: Session;
+  data: UserData;
 }
 
 const household_size = [
@@ -30,6 +29,41 @@ const household_size = [
   { label: "8명 이상", value: 8 },
 ] as const;
 
+const academic_status = [
+  { label: "초등학생", value: 1 },
+  { label: "중학생", value: 2 },
+  { label: "고등학생", value: 3 },
+  { label: "대학(원)생", value: 4 },
+  { label: "해당없음", value: 0 },
+] as const;
+
+const life_status = [
+  { label: "예비부모/난임", name: "prospective_parents_or_infertility" },
+  { label: "임산부", name: "pregnant" },
+  { label: "출산·입양", name: "childbirth_or_adoption" },
+] as const;
+
+const working_status = [
+  { label: "근로자/직장인", name: "employed" },
+  { label: "구직자/실업자", name: "unemployed" },
+] as const;
+
+const family_status = [
+  { label: "다문화가족", name: "multicultural" },
+  { label: "북한이탈주민", name: "north_korean" },
+  { label: "한부모·조손가정", name: "single_parent_or_grandparent" },
+  { label: "무주택세대", name: "homeless" },
+  { label: "신규전입", name: "new_resident" },
+  { label: "다자녀가구", name: "multi_child_family" },
+  { label: "확대가족", name: "extend_family" },
+] as const;
+
+const other_status = [
+  { label: "장애인", name: "disable" },
+  { label: "국가보훈대상자", name: "veteran" },
+  { label: "질병·질환자", name: "disease" },
+] as const;
+
 export default function UserDataEditForm({ data, session }: UserDataEditFormProps) {
   const form = useForm<PartialUserData>({
     resolver: zodResolver(PartialUserDataSchema),
@@ -38,14 +72,23 @@ export default function UserDataEditForm({ data, session }: UserDataEditFormProp
     },
   });
 
-  const onSubmit = (values: PartialUserData) => {
-    console.log(values);
-    const response = fetch("/api/user/user-data", {
-      method: "POST",
-      body: JSON.stringify(values),
-      redirect: "follow",
-      credentials: "include",
-    });
+  const onSubmit = async (values: PartialUserData) => {
+    if (!data.sub) {
+      const response = await fetch("/api/user/user-data", {
+        method: "POST",
+        body: JSON.stringify(values),
+        redirect: "follow",
+        credentials: "include",
+      });
+      location.reload();
+    } else {
+      const response = await fetch("/api/user/user-data", {
+        method: "PATCH",
+        body: JSON.stringify(values),
+        redirect: "follow",
+        credentials: "include",
+      });
+    }
   };
 
   return (
@@ -117,51 +160,18 @@ export default function UserDataEditForm({ data, session }: UserDataEditFormProp
                 <FormControl>
                   <fieldset>
                     <div className="flex flex-wrap gap-2">
-                      <ToggleButton
-                        type="radio"
-                        name={field.name}
-                        text="초등학생"
-                        onChange={field.onChange}
-                        id="as1"
-                        value={1}
-                        defaultChecked={field.value === 1}
-                      />
-                      <ToggleButton
-                        type="radio"
-                        name={field.name}
-                        text="중학생"
-                        onChange={field.onChange}
-                        id="as2"
-                        value={2}
-                        defaultChecked={field.value === 2}
-                      />
-                      <ToggleButton
-                        type="radio"
-                        name={field.name}
-                        text="고등학생"
-                        onChange={field.onChange}
-                        id="as3"
-                        value={3}
-                        defaultChecked={field.value === 3}
-                      />
-                      <ToggleButton
-                        type="radio"
-                        name={field.name}
-                        text="대학(원)생"
-                        onChange={field.onChange}
-                        id="as4"
-                        value={4}
-                        defaultChecked={field.value === 4}
-                      />
-                      <ToggleButton
-                        type="radio"
-                        name={field.name}
-                        text="해당없음"
-                        onChange={field.onChange}
-                        id="as0"
-                        value={0}
-                        defaultChecked={field.value === 0}
-                      />
+                      {academic_status.map((value) => (
+                        <ToggleButton
+                          type="radio"
+                          name={field.name}
+                          text={value.label}
+                          onChange={(e) => field.onChange(parseInt(e.target.value, 10))}
+                          id={value.label}
+                          value={value.value}
+                          key={value.label}
+                          defaultChecked={field.value === value.value}
+                        />
+                      ))}
                     </div>
                   </fieldset>
                 </FormControl>
@@ -169,129 +179,88 @@ export default function UserDataEditForm({ data, session }: UserDataEditFormProp
               </FormItem>
             )}
           />
+
           <div className="grid gap-2">
-            <FormLabel>가구원 수</FormLabel>
+            <FormLabel>출산 육아 상태</FormLabel>
             <div className="flex flex-wrap gap-2">
-              <FormField
-                control={form.control}
-                name="multicultural"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <ToggleButton text="다문화가족" defaultChecked={field.value} onChange={field.onChange} id={field.name} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="north_korean"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <ToggleButton text="북한이탈주민" defaultChecked={field.value} onChange={field.onChange} id={field.name} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="single_parent_or_grandparent"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <ToggleButton text="한부모·조손가정" defaultChecked={field.value} onChange={field.onChange} id={field.name} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="homeless"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <ToggleButton text="무주택세대" defaultChecked={field.value} onChange={field.onChange} id={field.name} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />{" "}
-              <FormField
-                control={form.control}
-                name="new_resident"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <ToggleButton text="신규전입" defaultChecked={field.value} onChange={field.onChange} id={field.name} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="multi_child_family"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <ToggleButton text="다자녀가구" defaultChecked={field.value} onChange={field.onChange} id={field.name} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="extend_family"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <ToggleButton text="확대가족" defaultChecked={field.value} onChange={field.onChange} id={field.name} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="disable"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <ToggleButton text="장애인" defaultChecked={field.value} onChange={field.onChange} id={field.name} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="veteran"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <ToggleButton text="국가보훈대상자" defaultChecked={field.value} onChange={field.onChange} id={field.name} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="disease"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <ToggleButton text="질병·질환자" defaultChecked={field.value} onChange={field.onChange} id={field.name} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              {life_status.map((value) => (
+                <FormField
+                  control={form.control}
+                  key={value.name}
+                  name={value.name}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <ToggleButton text={value.label} defaultChecked={field.value} onChange={field.onChange} id={field.name} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="grid gap-2">
+            <FormLabel>취직 정보</FormLabel>
+            <div className="flex flex-wrap gap-2">
+              {working_status.map((value) => (
+                <FormField
+                  control={form.control}
+                  key={value.name}
+                  name={value.name}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <ToggleButton text={value.label} defaultChecked={field.value} onChange={field.onChange} id={field.name} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="grid gap-2">
+            <FormLabel>가족 정보</FormLabel>
+            <div className="flex flex-wrap gap-2">
+              {family_status.map((value) => (
+                <FormField
+                  control={form.control}
+                  key={value.name}
+                  name={value.name}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <ToggleButton text={value.label} defaultChecked={field.value} onChange={field.onChange} id={field.name} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="grid gap-2">
+            <FormLabel>기타 정보</FormLabel>
+            <div className="flex flex-wrap gap-2">
+              {other_status.map((value) => (
+                <FormField
+                  control={form.control}
+                  key={value.name}
+                  name={value.name}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <ToggleButton text={value.label} defaultChecked={field.value} onChange={field.onChange} id={field.name} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              ))}
             </div>
           </div>
 
@@ -300,8 +269,10 @@ export default function UserDataEditForm({ data, session }: UserDataEditFormProp
               <RotateCcw />
               초기화
             </Button>
-            <Button type="submit" size="lg" className="flex-1">
-              저장하기
+            <Button type="submit" size="lg" className="flex-1" disabled={form.formState.isSubmitting}>
+              {form.formState.isSubmitting && <Loader2 className="animate-spin" />}
+              {form.formState.isSubmitting && "저장중"}
+              {!form.formState.isSubmitting && "저장하기"}
             </Button>
           </div>
         </form>

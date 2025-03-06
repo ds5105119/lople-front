@@ -7,9 +7,9 @@ interface ToggleButtonProps extends React.InputHTMLAttributes<HTMLInputElement> 
   ref?: RefCallBack;
 }
 
-export default function ToggleButton({ text, type, id, name, value, defaultChecked, checked, onBlur, onChange, ref }: ToggleButtonProps) {
+export default function ToggleButton({ text, type, id, name, value, defaultChecked, checked, onBlur, onChange, onClick, ref }: ToggleButtonProps) {
   return (
-    <div className="flex">
+    <div className="flex" onClick={onClick}>
       <input
         type={type ?? "checkbox"}
         id={id}

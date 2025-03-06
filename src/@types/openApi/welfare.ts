@@ -11,6 +11,7 @@ export const WelfareSchema = z.object({
   updated_at: z.string().datetime({ local: true }).nullable().optional(),
   views: z.number(),
 
+  service_id: z.string(),
   service_name: z.string(),
   service_summary: z.string().nullable().optional(),
   service_category: z.string().nullable().optional(),

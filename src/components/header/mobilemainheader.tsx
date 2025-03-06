@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-interface TopDetailHeaderProps extends React.ButtonHTMLAttributes<HTMLDivElement> {
+interface TopDetailHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   text?: string;
   href?: string;
   children?: React.ReactNode;

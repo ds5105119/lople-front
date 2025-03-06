@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import RecommendWelfareSection from "@/components/section/recommendwelfare";
+import DetailRecommendWelfareSection from "@/components/section/detailrecommendwelfare";
 
 export const metadata: Metadata = {
   title: "회원가입 | 복지 정책 서비스",
@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 export default async function Page() {
   return (
     <div className="container flex w-full h-full flex-col items-center">
-      <div className="mx-auto flex w-full flex-col justify-start space-y-6 sm:w-[400px]">
-        <RecommendWelfareSection />
+      <div className="mx-auto flex w-full flex-col justify-start space-y-6 sm:w-[500px]">
+        <DetailRecommendWelfareSection />
       </div>
     </div>
   );
