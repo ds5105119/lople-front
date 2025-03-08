@@ -60,25 +60,32 @@ export default function DetailRecommendWelfareSection() {
   };
 
   return (
-    <div>
-      <DragScrollContainer className="whitespace-nowrap flex space-x-3">
+    <div className="flex flex-col space-y-6 w-full">
+      <DragScrollContainer className="whitespace-nowrap flex space-x-3 w-full">
         {tags.map((value) => (
           <Button key={value.value} size="sm" variant={tag === value.value ? "default" : "outline"} onClick={() => onTagButtonClick(value.value)}>
             {value.name}
           </Button>
         ))}
       </DragScrollContainer>
-      <div className="space-x-0.5 mt-4">
+
+      <div className="flex flex-col space-x-0.5 mt-4 space-y-3">
         {data?.map((pages) => {
           return pages.map((value) => <WelfareCard key={value.id} data={value} />);
         })}
-        {isLoading && (
-          <div>
-            <WelfareCardSkeleton /> <WelfareCardSkeleton /> <WelfareCardSkeleton />
-          </div>
-        )}
       </div>
-      <button onClick={() => setSize(size + 1)}>Load More</button>
+
+      {isLoading && (
+        <div className="flex flex-col space-y-4">
+          <WelfareCardSkeleton /> <WelfareCardSkeleton /> <WelfareCardSkeleton />
+        </div>
+      )}
+
+      <div className="flex flex-col w-full items-center">
+        <Button variant="outline" onClick={() => setSize(size + 1)}>
+          더보기
+        </Button>
+      </div>
     </div>
   );
 }

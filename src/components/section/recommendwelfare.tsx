@@ -7,7 +7,7 @@ import { WelfareCardSkeleton } from "../skeleton/welfarecardskeleton";
 
 const getKey: SWRInfiniteKeyLoader = (index, previousPageData) => {
   if (previousPageData && !previousPageData.length) return null;
-  return `/api/welfare/recommend?page=${index}`;
+  return `/api/welfare/recommend?page=${index}&size=3`;
 };
 
 const fetcher = async (url: string) => {
@@ -25,17 +25,16 @@ export default function RecommendWelfareSection() {
 
   return (
     <div>
-      <div className="space-x-0.5">
+      <div className="space-x-0.5 w-full">
         {data?.map((pages) => {
           return pages.map((value) => <WelfareCard key={value.id} data={value} />);
         })}
         {isLoading && (
-          <div>
+          <div className="flex flex-col space-x-0.5 mt-4 space-y-3 w-full">
             <WelfareCardSkeleton /> <WelfareCardSkeleton /> <WelfareCardSkeleton />
           </div>
         )}
       </div>
-      <button onClick={() => setSize(size + 1)}>Load More</button>
     </div>
   );
 }

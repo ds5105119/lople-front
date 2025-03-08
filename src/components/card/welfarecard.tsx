@@ -27,8 +27,8 @@ const formatNumber = (num: number) => {
 export default function WelfareCard({ img, href, bookmarks, data, className }: WelfareCardProps) {
   return (
     <Link href={`/explore/welfare/${data.service_id}`}>
-      <Card className={cn("transition-all duration-200 hover:shadow-md", className)}>
-        <CardContent className="p-4 space-y-2">
+      <Card className={cn("transition-all duration-200 hover:shadow-md py-4 rounded-sm", className)}>
+        <CardContent className="space-y-2 px-4">
           <div className="flex items-center align-baseline space-x-2">
             {img && (
               <div className="w-6 h-6">
@@ -36,7 +36,7 @@ export default function WelfareCard({ img, href, bookmarks, data, className }: W
               </div>
             )}
             <span className="font-bold text-base leading-tight">{data.service_name}</span>
-            <span className="text-sm text-muted-foreground">@{data.receiving_agency}</span>
+            <span className="text-sm text-muted-foreground">@{data.offc_name}</span>
           </div>
 
           <div className="space-y-2">

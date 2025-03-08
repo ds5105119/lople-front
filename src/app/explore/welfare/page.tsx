@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import MobileDetailHeader from "@/components/header/mobiledetailheader";
 import DetailRecommendWelfareSection from "@/components/section/detailrecommendwelfare";
 
 export const metadata: Metadata = {
@@ -9,7 +10,8 @@ export const metadata: Metadata = {
 export default async function Page() {
   return (
     <div className="container flex w-full h-full flex-col items-center">
-      <div className="mx-auto flex w-full flex-col justify-start space-y-6 sm:w-[500px]">
+      <MobileDetailHeader text={"정책 모아보기"} />
+      <div className="mx-auto flex w-full flex-col justify-start space-y-6 p-8">
         <DetailRecommendWelfareSection />
       </div>
     </div>

@@ -14,11 +14,7 @@ export function WelfareDetails({ welfare }: WelfareDetailsProps) {
 
   return (
     <div className="border-t bg-white">
-      <Button
-        variant="ghost"
-        className="w-full flex justify-between items-center p-4"
-        onClick={() => setIsExpanded(!isExpanded)}
-      >
+      <Button variant="ghost" className="w-full flex justify-between items-center p-4" onClick={() => setIsExpanded(!isExpanded)}>
         <span className="font-semibold">정책을 요약했어요</span>
         {isExpanded ? <ChevronUp /> : <ChevronDown />}
       </Button>
@@ -27,7 +23,7 @@ export function WelfareDetails({ welfare }: WelfareDetailsProps) {
         <div className="px-4 pb-4 space-y-4">
           <div className="space-y-2">
             <h3 className="font-medium">지원대상</h3>
-            <p className="text-sm text-gray-600 whitespace-pre-line">{welfare.support_targets}</p>
+            <p className="text-sm text-gray-600 whitespace-pre-line">{welfare.service_conditions}</p>
           </div>
           <div className="space-y-2">
             <h3 className="font-medium">신청방법</h3>
