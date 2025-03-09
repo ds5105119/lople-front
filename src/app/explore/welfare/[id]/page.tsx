@@ -3,8 +3,7 @@ import { getWelfare } from "@/hooks/openApi/api/welfare";
 import { WelfareInfo } from "@/components/welfare/welfare-info";
 import { WelfareDetails } from "@/components/welfare/welfare-details";
 import { WelfareActions } from "@/components/welfare/welfare-actions";
-import MobileDetailHeader from "@/components/header/mobiledetailheader";
-import MobileHeaderShareButton from "@/components/button/mobileheadersharebutton";
+import Footer from "@/components/footer/footer";
 
 export const revalidate = 60;
 export const dynamicParams = true;
@@ -18,10 +17,7 @@ export async function generateStaticParams() {
   });
 
   if (firstResponse.status === 307) {
-    const redirectUrl = new URL(
-      firstResponse.headers.get("location")!,
-      `${process.env.NEXT_PUBLIC_WELFARE_STATIC_PARAMS_URL}`
-    ).toString();
+    const redirectUrl = new URL(firstResponse.headers.get("location")!, `${process.env.NEXT_PUBLIC_WELFARE_STATIC_PARAMS_URL}`).toString();
 
     const sessionCookie = firstResponse.headers.get("set-cookie")?.split(";")[0]; // 세션 쿠키 추출
     const secondResponse = await fetch(redirectUrl, {
@@ -46,17 +42,14 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   const welfare = await getWelfare({ id, session });
 
   return (
-    <div>
-      <MobileDetailHeader text={"정책 세부"}>
-        <MobileHeaderShareButton />
-      </MobileDetailHeader>
-
+    <div className="flex flex-col w-full h-full">
       <div className="space-y-4 px-6 mt-8">
         <WelfareInfo welfare={welfare} />
         <WelfareDetails welfare={welfare} />
       </div>
 
       <WelfareActions applyUrl={welfare.apply_url} contact={welfare.contact} />
+      <Footer />
     </div>
   );
 }

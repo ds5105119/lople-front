@@ -24,17 +24,15 @@ export default function RecommendWelfareSection() {
   if (error) return "error";
 
   return (
-    <div>
-      <div className="space-x-0.5 w-full">
-        {data?.map((pages) => {
-          return pages.map((value) => <WelfareCard key={value.id} data={value} />);
-        })}
-        {isLoading && (
-          <div className="flex flex-col space-x-0.5 mt-4 space-y-3 w-full">
-            <WelfareCardSkeleton /> <WelfareCardSkeleton /> <WelfareCardSkeleton />
-          </div>
-        )}
-      </div>
+    <div className="space-x-0.5 w-full">
+      {data?.map((pages) => {
+        return pages.map((value) => <WelfareCard key={value.id} data={value} />);
+      })}
+      {isLoading && (
+        <div className="flex flex-col space-x-0.5 mt-4 space-y-3 w-full">
+          <WelfareCardSkeleton /> <WelfareCardSkeleton /> <WelfareCardSkeleton />
+        </div>
+      )}
     </div>
   );
 }

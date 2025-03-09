@@ -16,6 +16,7 @@ export const WelfareSchema = z.object({
   service_summary: z.string().nullable().optional(),
   service_category: z.string().nullable().optional(),
   service_conditions: z.string().nullable().optional(),
+  service_description: z.string().nullable().optional(),
 
   offc_name: z.string().nullable().optional(),
   dept_name: z.string().nullable().optional(),

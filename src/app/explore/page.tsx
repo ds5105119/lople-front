@@ -1,9 +1,7 @@
 import { Metadata } from "next";
-import MobileMainHeader from "@/components/header/mobilemainheader";
-import MobileHeaderButton from "@/components/button/mobileheaderbutton";
 import RecommendWelfareSection from "@/components/section/recommendwelfare";
 import SectionButton from "@/components/button/sectionbutton";
-import { Search } from "lucide-react";
+import Footer from "@/components/footer/footer";
 
 export const metadata: Metadata = {
   title: "회원가입 | 복지 정책 서비스",
@@ -12,15 +10,12 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   return (
-    <div className="container flex w-full h-full flex-col items-center">
-      <MobileMainHeader text="서비스">
-        <MobileHeaderButton icon={Search} />
-      </MobileMainHeader>
-
+    <div className="flex flex-col w-full h-full items-center">
       <div className="mx-auto flex w-full flex-col justify-start space-y-6 p-8">
         <SectionButton href="/explore/welfare" text="모든 추천 정책 확인하기" />
         <RecommendWelfareSection />
       </div>
+      <Footer />
     </div>
   );
 }

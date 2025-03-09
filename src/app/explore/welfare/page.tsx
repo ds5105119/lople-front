@@ -1,6 +1,7 @@
 import { Metadata } from "next";
-import MobileDetailHeader from "@/components/header/mobiledetailheader";
+import { auth } from "@/auth";
 import DetailRecommendWelfareSection from "@/components/section/detailrecommendwelfare";
+import Footer from "@/components/footer/footer";
 
 export const metadata: Metadata = {
   title: "회원가입 | 복지 정책 서비스",
@@ -8,12 +9,17 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
+  const session = await auth();
+
   return (
-    <div className="container flex w-full h-full flex-col items-center">
-      <MobileDetailHeader text={"정책 모아보기"} />
-      <div className="mx-auto flex w-full flex-col justify-start space-y-6 p-8">
+    <div className="flex flex-col w-full min-h-full">
+      <div className="px-8 mt-6">
+        <span className="text-lg font-semibold">{session?.user?.name}님을 위한 복지 정보를 모아봤어요</span>
+      </div>
+      <div className="flex w-full flex-col justify-start space-y-6 px-8 mt-6">
         <DetailRecommendWelfareSection />
       </div>
+      <Footer />
     </div>
   );
 }

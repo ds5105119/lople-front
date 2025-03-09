@@ -6,16 +6,14 @@ export async function GET(request: Request) {
   const url = new URL(request.url);
   const params = new URLSearchParams();
   const session = await auth();
-  const tag = url.searchParams.get("tag");
-  const order_by = url.searchParams.get("order_by");
+  const start_year = url.searchParams.get("start_year");
+  const end_year = url.searchParams.get("end_year");
 
-  params.append("page", url.searchParams.get("page") || "0");
-  params.append("size", url.searchParams.get("size") || "20");
-  if (tag) params.append("tag", tag);
-  if (order_by) params.append("order_by", order_by);
+  if (start_year) params.append("tag", start_year);
+  if (end_year) params.append("tag", end_year);
 
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_RECOMMEND_WELFARE_URL}?${params.toString()}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_FISCAL_YEAR_URL}?${params.toString()}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

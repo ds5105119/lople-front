@@ -13,9 +13,7 @@ export default async function Page() {
   const userData = await getUserData({ session });
 
   return (
-    <div>
-      <MobileDetailHeader text="내 가구 정보" />
-
+    <div className="h-full">
       <div className="p-4 space-y-3">
         안녕하세요 {session?.user && session.user.name} 님
         <Tabs defaultValue="primary" className="w-full">

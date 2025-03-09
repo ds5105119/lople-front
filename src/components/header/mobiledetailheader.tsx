@@ -29,7 +29,7 @@ export default function MobileDetailHeader({ text, children }: TopDetailHeaderPr
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/90 backdrop-blur-xs supports-[backdrop-filter]:bg-background/60">
+    <header className="z-50 w-full border-b bg-background/90 backdrop-blur-xs supports-[backdrop-filter]:bg-background/60">
       <div className="relative flex h-14 max-w-screen-md items-center justify-center">
         <div className="absolute left-4">
           <Button variant="ghost" size="icon" onClick={handleOnClick}>
