@@ -9,8 +9,8 @@ export async function GET(request: Request) {
   const start_year = url.searchParams.get("start_year");
   const end_year = url.searchParams.get("end_year");
 
-  if (start_year) params.append("tag", start_year);
-  if (end_year) params.append("tag", end_year);
+  if (start_year) params.append("start_year", start_year);
+  if (end_year) params.append("end_year", end_year);
 
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_FISCAL_YEAR_URL}?${params.toString()}`, {

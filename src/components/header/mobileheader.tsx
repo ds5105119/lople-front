@@ -52,5 +52,11 @@ export default function MobileHeader({ text, session }: MobileHeader) {
     );
   } else if (pathname == "/accounts/welfare/data") {
     return <MobileDetailHeader text="내 가구 정보" />;
+  } else if (pathname == "/explore/fiscal") {
+    return (
+      <MobileMainHeader text={"예산 확인하기"}>
+        <MobileHeaderButton icon={Search} />
+      </MobileMainHeader>
+    );
   }
 }

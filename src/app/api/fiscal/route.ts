@@ -13,9 +13,9 @@ export async function GET(request: Request) {
 
   params.append("page", url.searchParams.get("page") || "0");
   params.append("size", url.searchParams.get("size") || "10");
-  if (start_year) params.append("tag", start_year);
-  if (end_year) params.append("tag", end_year);
-  if (dept_code) params.append("tag", dept_code);
+  if (start_year) params.append("start_year", start_year);
+  if (end_year) params.append("end_year", end_year);
+  if (dept_code) params.append("dept_code", dept_code);
   if (order_by) params.append("order_by", order_by);
 
   try {
