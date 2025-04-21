@@ -5,8 +5,7 @@ import MobileDetailHeader from "./mobiledetailheader";
 import MobileMainHeader from "./mobilemainheader";
 import MobileHeaderButton from "@/components/button/mobileheaderbutton";
 import MobileHeaderShareButton from "../button/mobileheadersharebutton";
-import { signIn } from "next-auth/react";
-import { Button } from "@/components/ui/button";
+import MobileHeaderSignInButton from "../button/mobileheadersigninbutton";
 import { Search, Settings } from "lucide-react";
 import { Session } from "next-auth";
 
@@ -39,17 +38,7 @@ export default function MobileHeader({ text, session }: MobileHeader) {
       </MobileDetailHeader>
     );
   } else if (pathname == "/accounts") {
-    return (
-      <MobileMainHeader text={"내 정보"}>
-        {session?.user ? (
-          <MobileHeaderButton icon={Settings} />
-        ) : (
-          <Button variant="default" type="submit" onClick={() => signIn("keycloak", { redirectTo: "/" })}>
-            로그인
-          </Button>
-        )}
-      </MobileMainHeader>
-    );
+    return <MobileMainHeader text={"내 정보"}>{session?.user ? <MobileHeaderButton icon={Settings} /> : <MobileHeaderSignInButton />}</MobileMainHeader>;
   } else if (pathname == "/accounts/welfare/data") {
     return <MobileDetailHeader text="내 가구 정보" />;
   } else if (pathname == "/explore/fiscal") {
@@ -58,5 +47,7 @@ export default function MobileHeader({ text, session }: MobileHeader) {
         <MobileHeaderButton icon={Search} />
       </MobileMainHeader>
     );
+  } else if (pathname.startsWith("/explore/fiscal")) {
+    return <MobileDetailHeader text="세부 예산 정보" />;
   }
 }

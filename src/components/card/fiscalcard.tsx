@@ -4,8 +4,9 @@ import { cn } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { FiscalByYearOffc } from "@/@types/openApi/fiscal";
 import { ChevronRight } from "lucide-react";
+import { formatNumberKoreanWon } from "@/lib/utils";
 
-interface WelfareCardProps {
+interface FiscalCardProps {
   index?: string | number;
   img?: string;
   href?: string;
@@ -14,27 +15,15 @@ interface WelfareCardProps {
   className?: string;
 }
 
-const formatNumber = (num: number) => {
-  if (num < 10) {
-    return new Intl.NumberFormat("ko-KR").format(num * 1000);
-  } else if (num < 10_000) {
-    return `${(num / 10).toFixed(1).replace(/\.0$/, "")}만`;
-  } else if (num < 100_000_000) {
-    return `${(num / 100_000).toFixed(0)}억 ${((num % 100_000) / 100).toFixed(0)}만`;
-  } else {
-    return `${(num / 1_000_000_000).toFixed(0)}조 ${((num % 1_000_000_000) / 100_000).toFixed(0)}억`;
-  }
-};
-
-export default function FiscalCard({ index, img, data, className }: WelfareCardProps) {
+export default function FiscalCard({ index, img, data, className }: FiscalCardProps) {
   const isDfn = data.Y_YY_DFN_MEDI_KCUR_AMT ? true : false;
-  const amt = formatNumber(data.Y_YY_DFN_MEDI_KCUR_AMT ?? data.Y_YY_MEDI_KCUR_AMT ?? 0);
+  const amt = formatNumberKoreanWon(data.Y_YY_DFN_MEDI_KCUR_AMT ?? data.Y_YY_MEDI_KCUR_AMT ?? 0);
   const pct = (data.Y_YY_MEDI_KCUR_AMT_PCT ?? data.Y_YY_DFN_MEDI_KCUR_AMT_PCT ?? 0) * 100;
   const src = img ?? "/Emblem_of_the_Government_of_the_Republic_of_Korea.png";
   const key = index ? `${index}` : null;
 
   return (
-    <Link href={`/explore/fiscal/${data.id}`}>
+    <Link href={`/explore/fiscal/${data.FSCL_YY}/${data.NORMALIZED_DEPT_NO}`}>
       <Card className={cn("transition-all duration-200 py-0 gap-0 rounded-md border-none bg-muted shadow-none", className)}>
         <CardContent className="px-0">
           <div className="flex h-16 w-full pl-6 pr-4 py-2.5 justify-between items-center">

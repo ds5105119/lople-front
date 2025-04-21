@@ -66,6 +66,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           refresh_expires_at: expiresIntoAt(account.refresh_expires_in),
         };
       },
+      checks: [process.env.NODE_ENV === "production" ? "pkce" : "none"],
     }),
   ],
   callbacks: {

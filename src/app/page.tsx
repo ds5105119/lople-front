@@ -13,6 +13,8 @@ export const metadata: Metadata = {
 export default async function Home() {
   const session = await auth();
 
+  console.log(session);
+
   return (
     <div className="flex flex-col w-full h-full">
       <main className="flex-1 min-h-screen flex flex-col gap-6 row-start-2 items-center pt-5 px-6">

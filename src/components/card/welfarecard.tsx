@@ -2,6 +2,7 @@ import { Eye, Bookmark } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Welfare } from "@/@types/openApi/welfare";
+import { formatNumber } from "@/lib/utils";
 import Link from "next/link";
 
 interface WelfareCardProps {
@@ -11,18 +12,6 @@ interface WelfareCardProps {
   data: Welfare;
   className?: string;
 }
-
-const formatNumber = (num: number) => {
-  if (num < 1000) {
-    return new Intl.NumberFormat("ko-KR").format(num); // 1~999는 그대로 표시
-  } else if (num < 1_000_000) {
-    return `${(num / 1000).toFixed(1).replace(/\.0$/, "")}K`; // 1,000 이상 1,000,000 미만은 K로 표시
-  } else if (num < 1_000_000_000) {
-    return `${(num / 1_000_000).toFixed(1).replace(/\.0$/, "")}M`; // 1,000,000 이상 1,000,000,000 미만은 M으로 표시
-  } else {
-    return `${(num / 1_000_000_000).toFixed(1).replace(/\.0$/, "")}B`; // 1,000,000,000 이상은 B로 표시
-  }
-};
 
 export default function WelfareCard({ img, href, bookmarks, data, className }: WelfareCardProps) {
   return (
